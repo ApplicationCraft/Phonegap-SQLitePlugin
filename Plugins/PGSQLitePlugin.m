@@ -81,6 +81,33 @@
     [self respond:callback withString: @"{ message: 'Database opened' }" withType:@"success"];
 }
 
+-(void) openCrypt: (NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+{
+    NSString *callback = [options objectForKey:@"callback"];
+    NSString *dbPath = [self getDBPath:[options objectForKey:@"path"]];
+    NSString *key = [options objectForKey:@"key"];
+    
+    if (dbPath == NULL) {
+        [self respond:callback withString:@"{ message: 'You must specify database path' }" withType:@"error"];
+        return;
+    }
+    
+    sqlite3 *db;
+    const char *path = [dbPath UTF8String];
+    
+    if (sqlite3_open(path, &db) != SQLITE_OK) {
+        const char *keyString = [key UTF8String];
+//        sqlite3_key(db, keyString, strlen(keyString));
+        
+        [self respond:callback withString:@"{ message: 'Unable to open DB' }" withType:@"error"];
+        return;
+    }
+    
+    NSValue *dbPointer = [NSValue valueWithPointer:db];
+    [openDBs setObject:dbPointer forKey: dbPath];
+    [self respond:callback withString: @"{ message: 'Database opened' }" withType:@"success"];
+}
+
 -(void) backgroundExecuteSqlBatch: (NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
     [self performSelector:@selector(_executeSqlBatch:) withObject:options afterDelay:0.001];

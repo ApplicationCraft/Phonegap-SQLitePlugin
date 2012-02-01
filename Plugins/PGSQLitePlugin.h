@@ -26,7 +26,7 @@
 
 #ifdef PHONEGAP_FRAMEWORK
     #import <PhoneGap/PGPlugin.h>
-    #import <PhoneGap/JSON.h>
+    #import <PhoneGap/JSONKit.h>
     #import <PhoneGap/PhoneGapDelegate.h>
     #import <PhoneGap/File.h>
 #else
@@ -44,6 +44,7 @@
 @property (nonatomic, retain) NSString *appDocsPath;
 
 -(void) open:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+-(void) openCrypt:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 -(void) backgroundExecuteSqlBatch:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 -(void) backgroundExecuteSql:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 -(void) executeSqlBatch:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
