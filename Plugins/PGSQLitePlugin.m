@@ -86,7 +86,7 @@
     
     if (sqlite3_open(path, &db) != SQLITE_OK) {
         const char *keyString = [key UTF8String];
-//        sqlite3_key(db, keyString, strlen(keyString));
+        sqlite3_key(db, keyString, strlen(keyString));
         
         [self respond:callback withString:@"{ message: 'Unable to open DB' }" withType:@"error"];
         return;
